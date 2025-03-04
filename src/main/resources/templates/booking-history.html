@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Booking History</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Booking History</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Passenger Name</th>
+            <th>Seat Number</th>
+            <th>Booking Date</th>
+            <th>Bus Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="booking : ${bookings}">
+            <td th:text="${booking.passengerName}"></td>
+            <td th:text="${booking.seatNumber}"></td>
+            <td th:text="${booking.bookingDate}"></td>
+            <td th:text="${booking.bus.busNumber}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

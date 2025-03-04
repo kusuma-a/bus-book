@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+        body {
+          background-color: #f8f9fa;
+          font-family: 'Arial', sans-serif;
+      }
+
+      .container {
+          margin-top: 50px;
+          max-width: 1200px;
+      }
+
+      h2 {
+          color: #343a40;
+          font-weight: bold;
+          margin-bottom: 20px;
+      }
+
+      h3 {
+          color: #495057;
+          margin-top: 30px;
+          margin-bottom: 20px;
+      }
+
+      .btn-primary {
+          background-color: #007bff;
+          border-color: #007bff;
+      }
+
+      .btn-primary:hover {
+          background-color: #0056b3;
+          border-color: #004085;
+      }
+
+      .btn-danger {
+          background-color: #dc3545;
+          border-color: #dc3545;
+      }
+
+      .btn-danger:hover {
+          background-color: #c82333;
+          border-color: #bd2130;
+      }
+
+      .form-group {
+          margin-bottom: 20px;
+      }
+
+      .form-control {
+          border-radius: 5px;
+          border: 1px solid #ced4da;
+          padding: 10px;
+      }
+
+      .form-control:focus {
+          border-color: #80bdff;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+      }
+
+      .table {
+          margin-top: 20px;
+          border-radius: 5px;
+          overflow: hidden;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .table th {
+          background-color: #007bff;
+          color: white;
+          font-weight: bold;
+          text-align: center;
+      }
+
+      .table td {
+          vertical-align: middle;
+          text-align: center;
+      }
+
+      .table tbody tr:hover {
+          background-color: #f1f1f1;
+      }
+
+      .btn-book {
+          background-color: #28a745;
+          border-color: #28a745;
+          color: white;
+      }
+
+      .btn-book:hover {
+          background-color: #218838;
+          border-color: #1e7e34;
+      }
+
+      .no-buses {
+          color: #6c757d;
+          font-style: italic;
+      }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="text-center mb-4">
+    <h2>Welcome to the Bus Booking System!</h2>
+    <p class="lead">You are now logged in.</p>
+    <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+    </div>
+
+    <!-- Bus Search Form -->
+    <div class="card p-4 mb-4">
+    <h3>Search for Buses</h3>
+    <form th:action="@{/home}" method="get">
+        <div class="form-group">
+            <label for="departure">Departure</label>
+            <input type="text" class="form-control" id="departure" name="departure" required>
+        </div>
+        <div class="form-group">
+            <label for="destination">Destination</label>
+            <input type="text" class="form-control" id="destination" name="destination" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    </div>
+    <!-- Bus Listing -->
+    <div class="card p-4">
+    <h3>Available Buses</h3>
+    <table class="table" th:if="${buses != null and !buses.empty}">
+        <thead>
+        <tr>
+            <th>Bus Number</th>
+            <th>Departure</th>
+            <th>Destination</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bus : ${buses}">
+            <td th:text="${bus.busNumber}"></td>
+            <td th:text="${bus.departure}"></td>
+            <td th:text="${bus.destination}"></td>
+            <td th:text="${bus.departureTime}"></td>
+            <td th:text="${bus.arrivalTime}"></td>
+            <td th:text="${bus.price}"></td>
+            <td>
+                <a th:href="@{/book?busId={id}(id=${bus.id})}" class="btn btn-primary">Book</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="no-buses" th:if="${buses == null or buses.empty}">No buses available.</p>
+    </div>
+</div>
+</body>
+</html>
